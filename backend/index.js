@@ -125,7 +125,7 @@ app.get('/api/rides', async(req, res) => {
 });
 
 // GET A SPECIFIC USER'S RIDES
-app.get('/api/rides/:userID', async(req, res) => {
+app.get('/api/rides/:userID', checkPassenger,async(req, res) => {
     try {
         const rides = await Ride.find({ passenger: req.params.userID });
         res.json(rides);

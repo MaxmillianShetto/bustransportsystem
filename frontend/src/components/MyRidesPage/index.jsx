@@ -13,8 +13,14 @@ const MyRidesPage = (props) => {
     // so that when a person logs in they dont encounter
     // the previous state which wasnt cleared
     const id = localStorage.getItem('id');
-    axios.get(`/api/rides/${id}`)
+    const access_token = localStorage.getItem('token');
+    axios.get(`/api/rides/${id}`, {
+      headers: {
+        'auth-token': `${access_token}`
+      }
+    })
     .then((res) =>{
+      console.log(res.data)
       setrides(res.data)
     })
     .catch(err => {
@@ -29,13 +35,17 @@ const MyRidesPage = (props) => {
       <Navbar />
       <div className="Form">
         <div className="FormTitle">My Rides</div>
-        {rides.map((ride, index) => (
+        {rides !== null ? rides
+                .slice(0)
+								.reverse()
+                .map((ride, index) => (
           <div className="Ride" key={index}>
             <div className="Date">{ride.pickupTime}</div>
             <div className="Departure">{ride.departureLocation}</div>
             <div className="Dest">{ride.destinationLocation}</div>
           </div>
-        ))}    
+          
+        )): ""}    
       </div>
     </div>
   )
