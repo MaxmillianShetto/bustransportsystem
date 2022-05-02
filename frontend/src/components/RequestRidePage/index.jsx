@@ -130,8 +130,10 @@ const RequestRidePage = (props) => {
     const rideDetails = { ...details, pickupTime, passenger: localStorage.getItem('id') };
 
     console.log(rideDetails)
+    const access_token = localStorage.getItem("token");
 
-    axios.post('/api/rides/request', rideDetails)
+    axios.post('/api/rides/request', rideDetails, 
+    {headers: {'auth-token': `${access_token}`}})
       .then(res => {
         console.log(res.data);
 
