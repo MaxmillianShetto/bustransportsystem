@@ -54,7 +54,7 @@ const LoginPage = (props) => {
         // save user data to store
         props.saveUser(res.data);
         // add access token to localstorage
-        // localStorage.setItem('token', res.data.id);
+        localStorage.setItem('token', res.data.token);
         localStorage.setItem('id', res.data.user);
         // console.log(res);
         if (res.data.role === 'passenger') {

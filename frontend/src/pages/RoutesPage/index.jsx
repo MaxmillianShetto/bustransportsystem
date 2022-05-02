@@ -9,7 +9,7 @@ import InputTextField from '../../components/InputText';
 
 const RoutesPage = (props) => {
     const [route, setRoute] = useState({
-        route: '',
+        routeName: '',
     });
     const [error, setError] = useState('');
     const handleChange = ({ target }) => {
@@ -35,23 +35,20 @@ const RoutesPage = (props) => {
         const { routeName } = route;
     
         const routeInfo = {
-          routeName: trimmed(routeName)
+          route: trimmed(routeName)
         }
     
         if (!routeInfo.route) {
           setError('Route is required');
           return;
         }
-        
-        console.log(routeInfo)
-        axios.post('/api/WeGo/users', routeInfo)             //!   Needs to be changed
+        const access_token = localStorage.getItem('token');
+        axios.post('/api/WeGo/route', routeInfo, 
+        {headers: {'auth-token': `${access_token}`}})             //!   Needs to be changed
           .then(res => {
-            // save user data to store
-            props.saveUser(res.data);
-            // add access token to localstorage
-            localStorage.setItem('token', res.data.id);
-            
-            window.location.href = "/";
+            console.log(res.data)
+            alert("hi")
+            window.location.href = "/admin";
           })
           .catch((err) => {
             setError('Incorrect email or password.');
@@ -67,7 +64,7 @@ const RoutesPage = (props) => {
                 <InputTextField
                     required
                     type="text"
-                    name="route"
+                    name="routeName"
                     value={route.routeName}
                     placeholder="Route"
                     onChange={handleChange}
