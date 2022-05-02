@@ -56,11 +56,6 @@ const ViewPassengersPage = (props) => {
                   <div className="Time">{dateTime(passenger.pickupTime)}</div>
                   <div className="Departure">{passenger.departureLocation}</div>
                   <div className="Dest">{passenger.destinationLocation}</div>
-                  <Button
-                    label="Pay"
-                    className="pay-btn"
-                    onClick={gotoPayments}
-                  />
                 </div>
               ))
           : ""}
