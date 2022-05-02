@@ -88,6 +88,7 @@ const RequestRidePage = (props) => {
         <div className="FormTitle">Request ride</div>
 
         <DateTimePicker
+          className="DateTimePicker"
           onChange={onDateTimeChange}
           value={pickupTime}
         />

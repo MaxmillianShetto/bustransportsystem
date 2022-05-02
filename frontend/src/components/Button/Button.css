@@ -1,15 +1,16 @@
 .Button {
-  border: 2px solid #f22a4f;
+  border: 2px solid #54A0EE;
   padding: .5rem 1rem;
-  background-color: #f22a4f;
+  background-color: #54A0EE;
   color: white;
   text-align: center;
   text-transform: capitalize;
   font-weight: bold;
   cursor: pointer;
+  border-radius: 6px;
 }
 
 .CancelBtn {
-  background-color: #09475d;
-  color: #ffffff;
+  background-color: #F5F5F7;
+  color: #000;
 }

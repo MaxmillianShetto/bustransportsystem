@@ -1,8 +1,9 @@
 .InputTextField {
   border: 2px solid white;
-  border-bottom-color: #f22a4f;
+  border-bottom-color: #837f80;
   background-color: white;
-  padding: .5rem;
+  padding: .8rem;
+  border-radius: 6px;
 }
 
 .InputTextField:focus{
