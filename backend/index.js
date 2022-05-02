@@ -154,6 +154,23 @@ app.post('/api/buses', async(req, res) => {
     }
 })
 
+//! ----- ADDING A BUS ------
+app.post('/api/WeGo/bus', checkDriver, async(req, res) => {
+    const bus = new Bus({
+        plateNumber: req.body.plateNumber,
+        available: req.body.available,
+        driver: req.body.driver,
+        issuingDate: req.body.issuingDate,
+    });
+    try {
+        await bus.save();
+        res.status(200).send({ code: 200, message: 'Successfully created bus.' });
+
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
 // GET ALL BUSES
 app.get('/api/buses', async(req, res) => {
     try {
