@@ -96,7 +96,7 @@ app.get('/api/users/:userID', async(req, res) => {
 // GET SPECIFIC USER
 app.get('/api/user/:type', async(req, res) => {
     try {
-        const user = await User.find({role:req.params.type});
+        const user = await Ride.find().populate('passenger');
         res.status(200).send(user);
     } catch (err) {
         res.json({ message: err });
