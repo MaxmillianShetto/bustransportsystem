@@ -5,3 +5,7 @@
   gap: 1rem;
   border-bottom: 1px solid black;
 }
+
+.pay-btn {
+  margin-bottom: 20px;
+}
