@@ -4,7 +4,9 @@ const jwt = require('jsonwebtoken');
 const { User } = require('./models');
 const { Ride } = require('./models');
 const { Bus } = require('./models');
+const { BusRoute } = require('./models');
 const mongoose = require('mongoose');
+const { checkPassenger, checkDriver } = require('./Middleware')
 const cors = require('cors');
 const config = require('./config/config');
 const PaymentManager = require('./payments/PaymentManager');
@@ -62,6 +64,7 @@ app.post('/api/users/login', async(req, res) => {
     // if (error) return res.status(400).send({ code: 400, details: error.details[0].message });
 
     // CHECK IF EMAIL EXISTS
+    console.log("oyaa")
     const user = await User.findOne({ email: req.body.email });
     if (!user) return res.status(400).send({ code: 400, details: 'Email or Password is invalid' });
 
@@ -93,7 +96,8 @@ app.get('/api/users/:userID', async(req, res) => {
 
 
 //! ----- ROUTES FOR RIDES ------
-app.post('/api/rides/request', async(req, res) => {
+app.post('/api/rides/request',checkPassenger,async(req, res) => {
+    console.log("hi1")
     const ride = new Ride({
         passenger: req.body.passenger,
         pickupTime: req.body.pickupTime,
@@ -123,7 +127,7 @@ app.get('/api/rides', async(req, res) => {
 });
 
 // GET A SPECIFIC USER'S RIDES
-app.get('/api/rides/:userID', async(req, res) => {
+app.get('/api/rides/:userID', checkPassenger,async(req, res) => {
     try {
         const rides = await Ride.find({ passenger: req.params.userID });
         res.json(rides);
@@ -176,6 +180,30 @@ app.get('/api/buses/:userID', async(req, res) => {
 //! ----- ROUTES FOR BUS STOPS ------
 
 //! ----- ROUTES FOR ZONES ------
+
+//! ----- ADD Route ----
+app.post('/api/WeGo/route', checkDriver ,async(req, res) => {
+    const route = new BusRoute({
+        name: req.body.route,
+    });
+    try {
+        await route.save();
+        res.status(200).send({ code: 200, message: 'Route added' });
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
+//! ----- ADD MANAGER ----
+app.post('/api/WeGo/manager', checkDriver ,async(req, res) => {
+
+    try {
+        res.status(200).send({ code: 200, message: 'Manager added' });
+
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
 
 console.log('Active Payment Methods', PaymentManager.getPaymentMethods());
 

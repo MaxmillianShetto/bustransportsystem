@@ -60,16 +60,16 @@ const AddManagerPage = (props) => {
     }
     
     console.log(userInfo)
-
-    axios.post('/api/WeGo/Manager', userInfo)
-
+    const access_token = localStorage.getItem('token');
+    axios.post('/api/WeGo/manager', userInfo, 
+    {headers: {'auth-token': `${access_token}`}})
       .then(res => {
         console.log(res.data);
         
         // props.saveUser(res.data);
         alert('Manager added successfully')
         //! Once they've registered, redirect them to the tutorial page
-        window.location.href = "/";
+        window.location.href = "/admin";
       })
       .catch((err) => {
         setError('Process failed.');
