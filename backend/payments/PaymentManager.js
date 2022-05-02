@@ -6,6 +6,7 @@ class PaymentManager {
         this.paymentMethods = new Set();
         this.paymentMethods.add(PaymentMethodFactory.getPaymentMethod('Card'));
         this.paymentMethods.add(PaymentMethodFactory.getPaymentMethod('Mobile Money'));
+        this.paymentMethods.add(PaymentMethodFactory.getPaymentMethod('PayPal'));
     }
 
     getPaymentMethods() {

@@ -5,6 +5,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 import Navbar from '../Navbar';
 import './MyRides.css';
+import Button from "../Button";
 
 const MyRidesPage = (props) => {
   const [rides, setrides] = useState([]);
@@ -27,6 +28,10 @@ const MyRidesPage = (props) => {
 
   }, []);
 
+  function gotoPayments() {
+    window.location.href = '/payments/list';
+  }
+
   return (
     <div className="MyRidesPage Page">
       <Navbar />
@@ -40,6 +45,11 @@ const MyRidesPage = (props) => {
             <div className="Date">{dateTime(ride.pickupTime)}</div>
             <div className="Departure">{ride.departureLocation}</div>
             <div className="Dest">{ride.destinationLocation}</div>
+            <Button
+                label="Pay"
+                className="pay-btn"
+                onClick={gotoPayments}
+            />
           </div>
           
         )): ""}    
