@@ -34,6 +34,10 @@ const AdminLinksPage = (props) => {
           Add bus
         </Link>
 
+        <Link to='/admin/view-passenger' className="LandingLoginBtn">
+          View passengers
+        </Link>
+
       </div>
     </div>
   )
