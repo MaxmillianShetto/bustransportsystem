@@ -7,6 +7,7 @@ const { Bus } = require('./models');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const config = require('./config/config');
+const PaymentManager = require('./payments/PaymentManager');
 
 // MIDDLEWARES 
 app.use(express.json());
@@ -175,5 +176,7 @@ app.get('/api/buses/:userID', async(req, res) => {
 //! ----- ROUTES FOR BUS STOPS ------
 
 //! ----- ROUTES FOR ZONES ------
+
+console.log('Active Payment Methods', PaymentManager.getPaymentMethods());
 
 app.listen(process.env.PORT || 5000);
