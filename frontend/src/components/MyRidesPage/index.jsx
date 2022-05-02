@@ -14,11 +14,7 @@ const MyRidesPage = (props) => {
     // the previous state which wasnt cleared
     const id = localStorage.getItem('id');
     const access_token = localStorage.getItem('token');
-    axios.get(`/api/rides/${id}`, {
-      headers: {
-        'auth-token': `${access_token}`
-      }
-    })
+    axios.get(`/api/rides/${id}`, {headers: {'auth-token': `${access_token}`}})
     .then((res) =>{
       console.log(res.data)
       setrides(res.data)

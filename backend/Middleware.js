@@ -29,12 +29,11 @@ exports.checkDriver = async (req, res, next) => {
             next();
         }
         else {
-            return res.json({status: 400, message: "You have to be a driver to perform this operation"});
+            return res.json({status: 400, message: "You are not authorized to perform this operation"});
         }
     } catch(err){
         return res.json({status: 401, message: "Something went wrong, please try again later"}); 
     }
-
 }
 
 
