@@ -31,7 +31,8 @@ const RequestRidePage = (props) => {
     // so that when a person logs in they dont encounter
     // the previous state which wasnt cleared
     const id = localStorage.getItem('id');
-    axios.get(`/api/rides/${id}`)
+    const access_token = localStorage.getItem('token');
+    axios.get(`/api/rides/${id}`,{headers: {'auth-token': `${access_token}`}})
       .then((res) => {
         const templist1 = [];
         const templist2 = [];
