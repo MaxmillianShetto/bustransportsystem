@@ -1,4 +1,10 @@
 class PaymentInterface {
+
+    constructor() {
+        this.name = 'PaymentInterface';
+        this.imageUrl = 'N/A';
+    }
+
     initiatePayment() {
         throw "Not Implemented";
     }

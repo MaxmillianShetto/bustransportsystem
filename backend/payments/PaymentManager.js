@@ -9,7 +9,7 @@ class PaymentManager {
     }
 
     getPaymentMethods() {
-        return this.paymentMethods;
+        return Array.from(this.paymentMethods);
     }
 
     addPaymentMethod(type) {

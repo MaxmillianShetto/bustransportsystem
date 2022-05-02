@@ -19,6 +19,7 @@ import RoutesPage from './pages/RoutesPage';
 import BusesPage from './pages/BusesPage';
 import RequestRidePage from './components/RequestRidePage';
 import MyRidesPage from './components/MyRidesPage';
+import PaymentMethodList from './components/PaymentMethodsList'
 // Protected route should have token. If not, login.
 // const ProtectedRoute = ({ isAllowed, ...props }) => (
 //   isAllowed
@@ -45,6 +46,7 @@ const Routes = () => {
         <Route exact path="/admin/add-zone" component={ZonesPage} />
         <Route exact path="/admin/add-route" component={RoutesPage} />
         <Route exact path="/admin/add-bus" component={BusesPage} />
+        <Route exact path="/payments/list" component={PaymentMethodList} />
         {/* <ProtectedRoute isAllowed={hasToken} exact path="/" component={App} /> */}
       </Switch>
     </Router>

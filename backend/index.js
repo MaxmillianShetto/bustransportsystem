@@ -205,6 +205,20 @@ app.post('/api/WeGo/manager', checkDriver ,async(req, res) => {
     }
 })
 
+
+// Payments
+app.get('/api/payments', async(req, res) => {
+
+    try {
+        res.status(200).send({ code: 200, message: PaymentManager.getPaymentMethods() });
+
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
 console.log('Active Payment Methods', PaymentManager.getPaymentMethods());
+
+app.use(express.static(__dirname + '/public'));
 
 app.listen(process.env.PORT || 5000);

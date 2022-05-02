@@ -1,11 +1,11 @@
 const PaymentInterface = require('../PaymentInterface');
 
-class CardPayment extends PaymentInterface {
+class PayPalPayment extends PaymentInterface {
 
     constructor() {
         super();
-        this.name = 'Card Payment';
-        this.imageUrl = 'card.png';
+        this.name = 'PayPal';
+        this.imageUrl = 'paypal.png';
     }
 
     initiatePayment() {
@@ -25,4 +25,4 @@ class CardPayment extends PaymentInterface {
     }
 }
 
-module.exports = CardPayment;
+module.exports = PayPalPayment;

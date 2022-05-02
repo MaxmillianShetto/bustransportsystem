@@ -1,6 +1,12 @@
 const PaymentInterface = require('../PaymentInterface');
 
-class MobileMoney extends PaymentInterface {
+class MobileMoneyPayment extends PaymentInterface {
+
+    constructor() {
+        super();
+        this.name = 'Mobile Money';
+        this.imageUrl = 'mobile_money.png';
+    }
 
     initiatePayment() {
         super.initiatePayment();
@@ -19,4 +25,4 @@ class MobileMoney extends PaymentInterface {
     }
 }
 
-module.exports = MobileMoney;
+module.exports = MobileMoneyPayment;
