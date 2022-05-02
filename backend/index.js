@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const { checkPassenger, checkDriver } = require('./Middleware')
 const cors = require('cors');
 const config = require('./config/config');
+const PaymentManager = require('./payments/PaymentManager');
 
 // MIDDLEWARES 
 app.use(express.json());
@@ -92,7 +93,15 @@ app.get('/api/users/:userID', async(req, res) => {
     }
 });
 
-
+// GET SPECIFIC USER
+app.get('/api/user/:type', async(req, res) => {
+    try {
+        const user = await User.find({role:req.params.type});
+        res.status(200).send(user);
+    } catch (err) {
+        res.json({ message: err });
+    }
+});
 
 //! ----- ROUTES FOR RIDES ------
 app.post('/api/rides/request',checkPassenger,async(req, res) => {
@@ -212,7 +221,7 @@ app.post('/api/WeGo/route', checkDriver ,async(req, res) => {
 
 //! ----- ADD MANAGER ----
 app.post('/api/WeGo/manager', checkDriver ,async(req, res) => {
-    
+
     try {
         res.status(200).send({ code: 200, message: 'Manager added' });
 
@@ -220,5 +229,21 @@ app.post('/api/WeGo/manager', checkDriver ,async(req, res) => {
         res.status(400).send(err);
     }
 })
+
+
+// Payments
+app.get('/api/payments', async(req, res) => {
+
+    try {
+        res.status(200).send({ code: 200, message: PaymentManager.getPaymentMethods() });
+
+    } catch (err) {
+        res.status(400).send(err);
+    }
+})
+
+console.log('Active Payment Methods', PaymentManager.getPaymentMethods());
+
+app.use(express.static(__dirname + '/public'));
 
 app.listen(process.env.PORT || 5000);

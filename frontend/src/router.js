@@ -10,7 +10,6 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import LandingPage from './components/LandingPage';
 import AddManagerPage from './components/AddManagerPage';
-import ViewPassengersPage from './components/ViewPassengersPage';
 import AddDriverPage from './components/AddDriverPage';
 import AdminLinksPage from './components/AdminLinksPage';
 import PassengerLinksPage from './components/PassengerLinksPage';
@@ -20,6 +19,8 @@ import RoutesPage from './pages/RoutesPage';
 import BusesPage from './pages/BusesPage';
 import RequestRidePage from './components/RequestRidePage';
 import MyRidesPage from './components/MyRidesPage';
+import PaymentMethodList from './components/PaymentMethodsList';
+import ViewPassengersPage from './components/ViewPassengersPage';
 // Protected route should have token. If not, login.
 // const ProtectedRoute = ({ isAllowed, ...props }) => (
 //   isAllowed
@@ -46,6 +47,7 @@ const Routes = () => {
         <Route exact path="/admin/add-zone" component={ZonesPage} />
         <Route exact path="/admin/add-route" component={RoutesPage} />
         <Route exact path="/admin/add-bus" component={BusesPage} />
+        <Route exact path="/payments/list" component={PaymentMethodList} />
         <Route exact path="/admin/view-passenger" component={ViewPassengersPage} />
         {/* <ProtectedRoute isAllowed={hasToken} exact path="/" component={App} /> */}
       </Switch>

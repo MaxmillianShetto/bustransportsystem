@@ -9,6 +9,7 @@ import { isValidEmail, isValidUsername, trimmed } from '../../helpers';
 import Button from '../Button';
 import InputTextField from '../InputText';
 import Navbar from '../Navbar';
+import Select from 'react-select'
 
 const RequestRidePage = (props) => {
   const [details, setDetails] = useState({
@@ -19,11 +20,87 @@ const RequestRidePage = (props) => {
   });
 
   const [error, setError] = useState('');
+  const [departureList, setdepartureList] = useState([]);
+  const [destinationList, setdestinationList] = useState([]);
+
+  const [showSuggestedDep, setShowSuggestedDep] = useState(false);
+  const [showSuggestedDest, setShowSuggestedDest] = useState(false);
+
+  useEffect(() => {
+    // remove the current state from local storage
+    // so that when a person logs in they dont encounter
+    // the previous state which wasnt cleared
+    const id = localStorage.getItem('id');
+    axios.get(`/api/rides/${id}`)
+      .then((res) => {
+        const templist1 = [];
+        const templist2 = [];
+        console.log(res.data);
+        res.data.forEach(ride => {
+          templist1.push({ value: ride.departureLocation, label: ride.departureLocation });
+          templist2.push({ value: ride.destinationLocation, label: ride.destinationLocation });
+          setdepartureList(templist1);
+          setdestinationList(templist2);
+        });
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+
+  }, []);
 
   const [pickupTime, onDateTimeChange] = useState(new Date());
+  // const options = [
+  //   { value: 'chocolate', label: 'Chocolate' },
+  //   { value: 'strawberry', label: 'Strawberry' },
+  //   { value: 'vanilla', label: 'Vanilla' }
+  // ]
 
+  const customStyles = {
+    option: (provided, state) => ({
+      ...provided,
+      borderBottom: '1px dotted pink',
+      color: state.isSelected ? 'red' : 'black',
+    }),
+    control: () => ({
+      // none of react-select's styles are passed to <Control />
+      width: 200,
+    }),
+    singleValue: (provided, state) => {
+      const opacity = state.isDisabled ? 0.5 : 1;
+      const transition = 'opacity 300ms';
+
+      return { ...provided, opacity, transition };
+    }
+  }
+
+  const handleSelectChange1 = (e) => {
+    setShowSuggestedDep(false);
+    setDetails({
+      ...details,
+      ["departureLocation"]: e.value
+    });
+  }
+  const handleSelectChange2 = (e) => {
+    setShowSuggestedDest(false);
+    setDetails({
+      ...details,
+      ["destinationLocation"]: e.value
+    });
+  }
   const handleChange = ({ target }) => {
     const { name, value } = target;
+    if (name == "departureLocation") {
+      setShowSuggestedDep(true);
+      setShowSuggestedDest(false);
+    } else if (name == "destinationLocation") {
+      setShowSuggestedDest(true);
+      setShowSuggestedDep(false);
+    } else{
+      setShowSuggestedDep(false);
+      setShowSuggestedDest(false);
+    }
 
     if (error) {
       setError('');
@@ -40,11 +117,11 @@ const RequestRidePage = (props) => {
       departureLocation,
       destinationLocation,
       numberOfSits,
-      disabledPeople} = details;
+      disabledPeople } = details;
 
     //* Trim user details
 
-    if (!pickupTime || !departureLocation || !destinationLocation || !numberOfSits || 
+    if (!pickupTime || !departureLocation || !destinationLocation || !numberOfSits ||
       !disabledPeople) {
       setError('All fields are required');
       return;
@@ -53,21 +130,32 @@ const RequestRidePage = (props) => {
     const rideDetails = { ...details, pickupTime, passenger: localStorage.getItem('id') };
 
     console.log(rideDetails)
+    const access_token = localStorage.getItem("token");
 
-    axios.post('/api/rides/request', rideDetails)
+    axios.post('/api/rides/request', rideDetails, 
+    {headers: {'auth-token': `${access_token}`}})
       .then(res => {
         console.log(res.data);
-        
+
         // props.saveUser(res.data);
         alert('Your ride has been requested')
         window.location.href = "/passenger/my-rides";
       })
       .catch((err) => {
-        setError('Process failed.');
-        
+        setError('Process failed, Confirm you are logged-in.');
+
         console.log(err);
       });
   };
+
+  const handleClear = () => {
+    setDetails({
+      departureLocation: '',
+      destinationLocation: '',
+      numberOfSits: '',
+      disabledPeople: '',
+    });
+  }
 
   const handleCancel = () => {
     setError('Request cancelled');
@@ -88,12 +176,12 @@ const RequestRidePage = (props) => {
         <div className="FormTitle">Request ride</div>
 
         <DateTimePicker
-          className="DateTimePicker"
           onChange={onDateTimeChange}
           value={pickupTime}
         />
 
         <InputTextField
+          id="departureInput"
           required
           type="text"
           name="departureLocation"
@@ -101,6 +189,15 @@ const RequestRidePage = (props) => {
           placeholder="Departure Location"
           onChange={handleChange}
         />
+        {/* A div containing top n departure location as sugestion, 
+    invicible until dep filled is focusedy, http://localhost:3000/passenger/request-ride
+    when clicked will auto populate*/}
+        {showSuggestedDep &&
+          <Select
+            onChange={handleSelectChange1}
+            placeholder="Suggestions"
+            styles={customStyles}
+            options={departureList} />}
 
         <InputTextField
           required
@@ -110,6 +207,11 @@ const RequestRidePage = (props) => {
           placeholder="Destination Location"
           onChange={handleChange}
         />
+        {showSuggestedDest &&
+          <Select onChange={handleSelectChange2}
+            placeholder="Suggestions"
+            styles={customStyles}
+            options={destinationList} />}
 
         <InputTextField
           required
@@ -138,6 +240,12 @@ const RequestRidePage = (props) => {
         <Button
           label="request ride"
           onClick={handleRequestRide}
+        />
+
+        <Button
+          label="Clear"
+          className="CancelBtn"
+          onClick={handleClear}
         />
 
         <Button
