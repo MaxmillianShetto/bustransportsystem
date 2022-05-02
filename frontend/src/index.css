@@ -23,7 +23,7 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background: #09475d;
+  background: #F5F5F7;
 }
 
   /* background: linear-gradient(192.32deg, #DFEFFF 0%, #2196F3 100%); */
@@ -39,7 +39,7 @@ header {
   padding: 2rem 0;
   background: #ffffff;
   text-align: center;
-  color: #09475d;
+  color: #F5F5F7;
   font-size: x-large;
   font-weight: 900;
   border-radius: 20px;
@@ -66,7 +66,8 @@ header div {
   font-family: montserrat, sans-serif;
   font-size: x-large;
   font-weight: bold;
-  color: #ffffff;
+  border-radius: 6px;
+  color: #000;
 }
 
 .AlternativeLink {
@@ -76,7 +77,7 @@ header div {
 .AlternativeLink a {
   text-decoration: none;
   border-bottom: 1px solid #ffffff;
-  color: #f22a4f;
+  color: #000;
   font-weight: bold;
 }
 
