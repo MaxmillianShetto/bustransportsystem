@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { dateTime } from '../../helpers/dateConversion';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import Navbar from '../Navbar';
@@ -36,7 +37,7 @@ const MyRidesPage = (props) => {
 								.reverse()
                 .map((ride, index) => (
           <div className="Ride" key={index}>
-            <div className="Date">{ride.pickupTime}</div>
+            <div className="Date">{dateTime(ride.pickupTime)}</div>
             <div className="Departure">{ride.departureLocation}</div>
             <div className="Dest">{ride.destinationLocation}</div>
           </div>

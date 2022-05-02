@@ -52,14 +52,11 @@ const BusesPage = (props) => {
         
         console.log(BusInfo);
         // Needs to be changed
-        axios.post('/api/WeGo/users', BusInfo)             
-          .then(res => {
-            // save user data to store
-            props.saveUser(res.data);
-            // add access token to localstorage
-            localStorage.setItem('token', res.data.id);
-            
-            window.location.href = "/";
+        const access_token = localStorage.getItem('token');
+        axios.post('/api/WeGo/bus', BusInfo, 
+        {headers: {'auth-token': `${access_token}`}})             
+          .then(res => {            
+            window.location.href = "/admin";
           })
           .catch((err) => {
             setError('Incorrect email or password.');
