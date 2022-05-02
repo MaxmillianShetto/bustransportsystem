@@ -10,9 +10,11 @@
 
 .LandingLoginBtn {
   color: white;
+  font-weight: bold;
   text-decoration: none;
-  background-color: #f22a4f;
+  background-color: #54A0EE;
   text-align: center;
+  border-radius: 6px;
   padding: .5rem 1rem;
 }
 
