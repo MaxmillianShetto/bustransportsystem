@@ -31,7 +31,7 @@ const PaymentMethodList = (props) => {
 
           <div>
               {paymentMethods.map((paymentMethod) => (
-                  <div>
+                  <div key={paymentMethod.name} >
                       <img src={'http://localhost:5000/images/'+paymentMethod.imageUrl} width={100} height={100} />
                       <h3>{paymentMethod.name}</h3>
                       <Button label="Pay"/>
