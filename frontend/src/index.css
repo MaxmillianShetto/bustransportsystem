@@ -70,6 +70,15 @@ header div {
   color: #000;
 }
 
+.react-datetime-picker__wrapper {
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 0;
+  border: thin solid gray;
+  padding: 4px;
+  border-radius: 6px;
+}
+
 .AlternativeLink {
   color: #000;
 }
