@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { User } = require('./models');
 const { Ride } = require('./models');
 const { Bus } = require('./models');
+const { BusRoute } = require('./models');
 const mongoose = require('mongoose');
 const { checkPassenger, checkDriver } = require('./Middleware')
 const cors = require('cors');
@@ -181,8 +182,11 @@ app.get('/api/buses/:userID', async(req, res) => {
 
 //! ----- ADD Route ----
 app.post('/api/WeGo/route', checkDriver ,async(req, res) => {
-    
+    const route = new BusRoute({
+        name: req.body.route,
+    });
     try {
+        await route.save();
         res.status(200).send({ code: 200, message: 'Route added' });
     } catch (err) {
         res.status(400).send(err);
